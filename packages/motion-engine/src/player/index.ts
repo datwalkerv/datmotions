@@ -1,0 +1,1 @@
+export { TemplatePlayer } from './TemplatePlayer'

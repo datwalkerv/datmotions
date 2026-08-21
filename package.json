@@ -1,0 +1,15 @@
+{
+  "name": "datmotions",
+  "private": true,
+  "version": "0.0.1",
+  "packageManager": "pnpm@10.29.3",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "pnpm --filter @datmotions/web dev",
+    "build": "pnpm --filter @datmotions/web build",
+    "lint": "pnpm --filter @datmotions/web lint"
+  }
+}

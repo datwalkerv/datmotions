@@ -1,0 +1,26 @@
+{
+  "name": "@datmotions/motion-engine",
+  "version": "0.0.1",
+  "private": true,
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./templates": "./src/templates/index.ts",
+    "./player": "./src/player/index.ts",
+    "./metadata": "./src/templates/metadata.ts"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0"
+  },
+  "dependencies": {
+    "remotion": "^4.0.290",
+    "@remotion/player": "^4.0.290",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5",
+    "@types/react": "^18.3.3",
+    "react": "^18.3.1"
+  }
+}

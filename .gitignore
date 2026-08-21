@@ -1,0 +1,35 @@
+# deps
+node_modules
+.pnp
+.pnp.js
+
+# build outputs
+dist/
+.next/
+out/
+build/
+
+# env
+.env
+.env.local
+.env.*.local
+
+# turbo
+.turbo/
+
+# OS
+.DS_Store
+Thumbs.db
+._*
+
+# generated
+next-env.d.ts
+
+# logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# ide
+.vscode/
+.idea/
