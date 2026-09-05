@@ -38,7 +38,7 @@ export const dataChartDefinition: TemplateDefinition<DataChartProps> = {
   defaultProps: {
     title: 'Q4 Performance',
     subtitle: 'Year-over-year growth metrics',
-    bar1Label: 'Revenue', bar1Value: 87, bar1Color: '#39FF88',
+    bar1Label: 'Revenue', bar1Value: 87, bar1Color: '#39FF14',
     bar2Label: 'Users', bar2Value: 64, bar2Color: '#7C3AED',
     bar3Label: 'Retention', bar3Value: 92, bar3Color: '#F59E0B',
     bar4Label: 'NPS Score', bar4Value: 78, bar4Color: '#3B82F6',
@@ -55,7 +55,7 @@ export const dataChartDefinition: TemplateDefinition<DataChartProps> = {
     { key: 'subtitle', label: 'Subtitle', group: 'Content', control: 'text', default: 'Year-over-year growth metrics' },
     { key: 'bar1Label', label: 'Bar 1 Label', group: 'Bar 1', control: 'text', default: 'Revenue' },
     { key: 'bar1Value', label: 'Bar 1 Value', group: 'Bar 1', control: 'slider', default: 87, min: 0, max: 100, step: 1 },
-    { key: 'bar1Color', label: 'Bar 1 Color', group: 'Bar 1', control: 'color', default: '#39FF88' },
+    { key: 'bar1Color', label: 'Bar 1 Color', group: 'Bar 1', control: 'color', default: '#39FF14' },
     { key: 'bar2Label', label: 'Bar 2 Label', group: 'Bar 2', control: 'text', default: 'Users' },
     { key: 'bar2Value', label: 'Bar 2 Value', group: 'Bar 2', control: 'slider', default: 64, min: 0, max: 100, step: 1 },
     { key: 'bar2Color', label: 'Bar 2 Color', group: 'Bar 2', control: 'color', default: '#7C3AED' },

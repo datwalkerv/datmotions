@@ -28,7 +28,7 @@ export const quoteDefinition: TemplateDefinition<QuoteProps> = {
     backgroundColor: '#0A0A0B',
     quoteColor: '#F4F4F5',
     attributionColor: 'rgba(244,244,245,0.55)',
-    accentColor: '#39FF88',
+    accentColor: '#39FF14',
     fontFamily: 'fraunces',
     animationStyle: 'mask-reveal',
   },
@@ -48,7 +48,7 @@ export const quoteDefinition: TemplateDefinition<QuoteProps> = {
     { key: 'backgroundColor', label: 'Background', group: 'Color', control: 'color', default: '#0A0A0B' },
     { key: 'quoteColor', label: 'Quote Color', group: 'Color', control: 'color', default: '#F4F4F5' },
     { key: 'attributionColor', label: 'Attribution Color', group: 'Color', control: 'color', default: 'rgba(244,244,245,0.55)' },
-    { key: 'accentColor', label: 'Accent Color', group: 'Color', control: 'color', default: '#39FF88' },
+    { key: 'accentColor', label: 'Accent Color', group: 'Color', control: 'color', default: '#39FF14' },
   ],
   component: QuoteComposition,
 }

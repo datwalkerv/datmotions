@@ -29,7 +29,7 @@ export const titleRevealDefinition: TemplateDefinition<TitleRevealProps> = {
     backgroundColor: '#0A0A0B',
     headlineColor: '#FFFFFF',
     sublineColor: 'rgba(255,255,255,0.6)',
-    accentColor: '#39FF88',
+    accentColor: '#39FF14',
     fontFamily: 'sf-pro-display',
     animationStyle: 'blur-rise',
     holdDuration: 60,
@@ -97,7 +97,7 @@ export const titleRevealDefinition: TemplateDefinition<TitleRevealProps> = {
       label: 'Accent Color',
       group: 'Color',
       control: 'color',
-      default: '#39FF88',
+      default: '#39FF14',
     },
     {
       key: 'fontFamily',

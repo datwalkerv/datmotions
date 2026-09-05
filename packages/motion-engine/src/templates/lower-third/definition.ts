@@ -26,7 +26,7 @@ export const lowerThirdDefinition: TemplateDefinition<LowerThirdProps> = {
   defaultProps: {
     name: 'Jane Smith',
     title: 'Creative Director',
-    accentColor: '#39FF88',
+    accentColor: '#39FF14',
     backgroundColor: 'rgba(0,0,0,0.85)',
     textColor: '#FFFFFF',
     subtitleColor: 'rgba(255,255,255,0.7)',
@@ -56,7 +56,7 @@ export const lowerThirdDefinition: TemplateDefinition<LowerThirdProps> = {
     { key: 'backgroundColor', label: 'Background', group: 'Color', control: 'color', default: 'rgba(0,0,0,0.85)' },
     { key: 'textColor', label: 'Name Color', group: 'Color', control: 'color', default: '#FFFFFF' },
     { key: 'subtitleColor', label: 'Title Color', group: 'Color', control: 'color', default: 'rgba(255,255,255,0.7)' },
-    { key: 'accentColor', label: 'Accent Line Color', group: 'Color', control: 'color', default: '#39FF88' },
+    { key: 'accentColor', label: 'Accent Line Color', group: 'Color', control: 'color', default: '#39FF14' },
   ],
   component: LowerThirdComposition,
 }

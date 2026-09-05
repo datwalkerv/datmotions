@@ -27,7 +27,7 @@ export const kineticTypographyDefinition: TemplateDefinition<KineticTypographyPr
     phrase: 'Move fast. Think deep. Ship great.',
     backgroundColor: '#0A0A0B',
     textColor: '#FFFFFF',
-    accentColor: '#39FF88',
+    accentColor: '#39FF14',
     fontFamily: 'sf-pro-display',
     fontWeight: 700,
     fontSize: 1.0,
@@ -51,7 +51,7 @@ export const kineticTypographyDefinition: TemplateDefinition<KineticTypographyPr
     ]},
     { key: 'backgroundColor', label: 'Background', group: 'Color', control: 'color', default: '#0A0A0B' },
     { key: 'textColor', label: 'Text Color', group: 'Color', control: 'color', default: '#FFFFFF' },
-    { key: 'accentColor', label: 'Accent Color', group: 'Color', control: 'color', default: '#39FF88' },
+    { key: 'accentColor', label: 'Accent Color', group: 'Color', control: 'color', default: '#39FF14' },
   ],
   component: KineticTypographyComposition,
 }

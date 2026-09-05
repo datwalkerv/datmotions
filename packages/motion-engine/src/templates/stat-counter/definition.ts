@@ -32,7 +32,7 @@ export const statCounterDefinition: TemplateDefinition<StatCounterProps> = {
     backgroundColor: '#0A0A0B',
     numberColor: '#FFFFFF',
     labelColor: 'rgba(255,255,255,0.6)',
-    accentColor: '#39FF88',
+    accentColor: '#39FF14',
     countUpDuration: 90,
     easingStyle: 'expo',
     fontFamily: 'sf-pro-display',
@@ -55,7 +55,7 @@ export const statCounterDefinition: TemplateDefinition<StatCounterProps> = {
     { key: 'backgroundColor', label: 'Background', group: 'Color', control: 'color', default: '#0A0A0B' },
     { key: 'numberColor', label: 'Number Color', group: 'Color', control: 'color', default: '#FFFFFF' },
     { key: 'labelColor', label: 'Label Color', group: 'Color', control: 'color', default: 'rgba(255,255,255,0.6)' },
-    { key: 'accentColor', label: 'Accent Color', group: 'Color', control: 'color', default: '#39FF88' },
+    { key: 'accentColor', label: 'Accent Color', group: 'Color', control: 'color', default: '#39FF14' },
   ],
   component: StatCounterComposition,
 }

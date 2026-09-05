@@ -19,9 +19,9 @@ const config: Config = {
           strong: 'rgba(255,255,255,0.14)',
         },
         accent: {
-          DEFAULT: '#39FF88',
-          dim: 'rgba(57,255,136,0.12)',
-          glow: 'rgba(57,255,136,0.3)',
+          DEFAULT: '#39FF14',
+          dim: 'rgba(57,255,20,0.12)',
+          glow: 'rgba(57,255,20,0.3)',
         },
         text: {
           primary: '#F4F4F5',

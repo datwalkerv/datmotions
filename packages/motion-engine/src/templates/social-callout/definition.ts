@@ -32,7 +32,7 @@ export const socialCalloutDefinition: TemplateDefinition<SocialCalloutProps> = {
     backgroundColor: '#0A0A0B',
     cardColor: '#18181B',
     textColor: '#F4F4F5',
-    accentColor: '#39FF88',
+    accentColor: '#39FF14',
     animationStyle: 'pop',
     cornerRadius: 24,
     staggerDelay: 7,
@@ -52,7 +52,7 @@ export const socialCalloutDefinition: TemplateDefinition<SocialCalloutProps> = {
     { key: 'backgroundColor', label: 'Background', group: 'Color', control: 'color', default: '#0A0A0B' },
     { key: 'cardColor', label: 'Card Color', group: 'Color', control: 'color', default: '#18181B' },
     { key: 'textColor', label: 'Text Color', group: 'Color', control: 'color', default: '#F4F4F5' },
-    { key: 'accentColor', label: 'Accent Color', group: 'Color', control: 'color', default: '#39FF88' },
+    { key: 'accentColor', label: 'Accent Color', group: 'Color', control: 'color', default: '#39FF14' },
   ],
   component: SocialCalloutComposition,
 }

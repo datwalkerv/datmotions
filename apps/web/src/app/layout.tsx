@@ -21,6 +21,9 @@ export const metadata: Metadata = {
   title: 'datmotions — Motion Graphics Studio',
   description:
     'Premium Apple-style motion graphics templates. Preview, customize, and export production-ready video.',
+  icons: {
+    icon: '/favicon.svg',
+  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

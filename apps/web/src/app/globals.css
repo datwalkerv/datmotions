@@ -3,8 +3,14 @@
 @tailwind utilities;
 
 :root {
-  --background: #0A0A0B;
-  --foreground: #F4F4F5;
+  --neon: #39ff14;
+  --bg: #0a0a0a;
+  --surface: #111111;
+  --surface-2: #1a1a1a;
+  --border: #222222;
+  --text: #e8e8e8;
+  --text-muted: #666666;
+  --text-faint: #444444;
 }
 
 * {
@@ -13,29 +19,45 @@
 
 html,
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-inter), system-ui, sans-serif;
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-inter), "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: var(--neon);
+  color: #000;
 }
 
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 4px;
 }
+
 ::-webkit-scrollbar-track {
   background: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.12);
-  border-radius: 3px;
+  background: #2a2a2a;
+  border-radius: 2px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: #3a3a3a;
+}
+
+textarea {
+  resize: none;
+  outline: none;
+  border: none;
+  background: transparent;
+  color: inherit;
+  font: inherit;
 }
 
 :focus-visible {
-  outline: 2px solid #39ff88;
+  outline: 2px solid var(--neon);
   outline-offset: 2px;
 }
