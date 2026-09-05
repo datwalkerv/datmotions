@@ -1,3 +1,8 @@
 packages:
   - 'apps/*'
   - 'packages/*'
+
+# Native postinstalls pnpm 10 blocks by default; Vercel's install needs these too.
+onlyBuiltDependencies:
+  - sharp
+  - unrs-resolver

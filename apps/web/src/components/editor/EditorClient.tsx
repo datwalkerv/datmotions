@@ -132,7 +132,7 @@ function EditorInner({ template }: { template: TemplateDefinition<Record<string,
 
       {showExport && (
         <ExportModal
-          templateId={template.id}
+          template={template}
           props={props}
           format={format}
           fps={fps}

@@ -1,11 +1,18 @@
 'use client'
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, useRef } from 'react'
 import { X, Download, Loader2 } from 'lucide-react'
+import type { TemplateDefinition } from '@datmotions/motion-engine'
+import {
+  renderInBrowser,
+  checkBrowserSupport,
+  FORMAT_DIMENSIONS,
+  type ExportFormat,
+} from '@/lib/web-render'
 
 interface ExportModalProps {
-  templateId: string
+  template: TemplateDefinition<Record<string, unknown>>
   props: Record<string, unknown>
-  format: '1920x1080' | '1080x1920' | '1080x1080'
+  format: ExportFormat
   fps: number
   durationInFrames: number
   onClose: () => void
@@ -21,7 +28,7 @@ const SCENE_BG_OPTIONS: { value: SceneBackground; label: string; color?: string 
 ]
 
 export function ExportModal({
-  templateId,
+  template,
   props,
   format,
   fps,
@@ -30,52 +37,90 @@ export function ExportModal({
 }: ExportModalProps) {
   const [status, setStatus] = useState<ExportStatus>('idle')
   const [progress, setProgress] = useState(0)
-  const [jobId, setJobId] = useState<string | null>(null)
+  const [downloadUrl, setDownloadUrl] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const [unsupported, setUnsupported] = useState<string | null>(null)
   const [sceneBg, setSceneBg] = useState<SceneBackground>('default')
+  const abortRef = useRef<AbortController | null>(null)
+  const urlRef = useRef<string | null>(null)
+
+  // WebCodecs is required: Chrome 94+, Firefox 130+, Safari 26+.
+  useEffect(() => {
+    let cancelled = false
+    checkBrowserSupport(format)
+      .then((result) => {
+        if (cancelled) return
+        setUnsupported(
+          result.canRender
+            ? null
+            : result.issues.find((i) => i.severity === 'error')?.message ??
+                'This browser cannot render video. Try Chrome, Edge or Firefox.'
+        )
+      })
+      .catch(() => {
+        if (!cancelled) setUnsupported('This browser cannot render video. Try Chrome, Edge or Firefox.')
+      })
+    return () => {
+      cancelled = true
+    }
+  }, [format])
+
+  // Release the blob URL and stop any in-flight render when the modal closes.
+  useEffect(() => {
+    return () => {
+      abortRef.current?.abort()
+      if (urlRef.current) URL.revokeObjectURL(urlRef.current)
+    }
+  }, [])
 
   const startRender = useCallback(async () => {
+    if (urlRef.current) {
+      URL.revokeObjectURL(urlRef.current)
+      urlRef.current = null
+      setDownloadUrl(null)
+    }
     setStatus('rendering')
     setProgress(0)
     setError(null)
+
+    const controller = new AbortController()
+    abortRef.current = controller
+
     const bgOverride = SCENE_BG_OPTIONS.find((o) => o.value === sceneBg)?.color
     const exportProps = bgOverride ? { ...props, __chromaBg: bgOverride } : props
+
     try {
-      const res = await fetch('/api/render', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ templateId, props: exportProps, format, fps, durationInFrames }),
+      const blob = await renderInBrowser({
+        template,
+        props: exportProps,
+        format,
+        fps,
+        durationInFrames,
+        onProgress: setProgress,
+        signal: controller.signal,
       })
-      if (!res.ok) throw new Error(await res.text())
-      const { jobId: id } = (await res.json()) as { jobId: string }
-      setJobId(id)
+      const url = URL.createObjectURL(blob)
+      urlRef.current = url
+      setDownloadUrl(url)
+      setProgress(1)
+      setStatus('done')
     } catch (err) {
+      if (controller.signal.aborted) {
+        setStatus('idle')
+        return
+      }
       setStatus('error')
-      setError(String(err))
+      setError(err instanceof Error ? err.message : String(err))
+    } finally {
+      abortRef.current = null
     }
-  }, [templateId, props, format, fps, durationInFrames, sceneBg])
+  }, [template, props, format, fps, durationInFrames, sceneBg])
 
-  useEffect(() => {
-    if (!jobId || status !== 'rendering') return
-    const interval = setInterval(async () => {
-      try {
-        const res = await fetch(`/api/render/${jobId}`)
-        const data = (await res.json()) as { status: string; progress?: number; error?: string }
-        setProgress(data.progress ?? 0)
-        if (data.status === 'done') {
-          setStatus('done')
-          clearInterval(interval)
-        } else if (data.status === 'error') {
-          setStatus('error')
-          setError(data.error ?? 'Render failed')
-          clearInterval(interval)
-        }
-      } catch {}
-    }, 1000)
-    return () => clearInterval(interval)
-  }, [jobId, status])
+  const cancelRender = useCallback(() => {
+    abortRef.current?.abort()
+  }, [])
 
-  const [w, h] = format.split('x').map(Number)
+  const { width: w, height: h } = FORMAT_DIMENSIONS[format]
   const durationSec = (durationInFrames / fps).toFixed(1)
 
   return (
@@ -143,13 +188,23 @@ export function ExportModal({
           )}
         </div>
 
+        {unsupported && (
+          <p className="mb-3 text-xs text-amber-400">{unsupported}</p>
+        )}
+
         {status === 'idle' && (
-          <button
-            onClick={startRender}
-            className="w-full py-2.5 bg-accent text-canvas font-semibold text-sm rounded-lg hover:bg-accent/90 transition-colors"
-          >
-            Start Render
-          </button>
+          <>
+            <button
+              onClick={startRender}
+              disabled={Boolean(unsupported)}
+              className="w-full py-2.5 bg-accent text-canvas font-semibold text-sm rounded-lg hover:bg-accent/90 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+            >
+              Start Render
+            </button>
+            <p className="mt-2 text-xs text-text-muted text-center">
+              Renders locally in your browser — nothing is uploaded.
+            </p>
+          </>
         )}
 
         {status === 'rendering' && (
@@ -164,13 +219,20 @@ export function ExportModal({
                 style={{ width: `${progress * 100}%` }}
               />
             </div>
+            <p className="text-xs text-text-muted">Keep this tab in the foreground for best speed.</p>
+            <button
+              onClick={cancelRender}
+              className="w-full py-2 bg-canvas-raised border border-border text-text-secondary text-xs rounded-lg hover:text-text-primary transition-colors"
+            >
+              Cancel
+            </button>
           </div>
         )}
 
-        {status === 'done' && jobId && (
+        {status === 'done' && downloadUrl && (
           <a
-            href={`/api/render/${jobId}/file`}
-            download
+            href={downloadUrl}
+            download={`datmotions-${template.id}.mp4`}
             className="flex items-center justify-center gap-2 w-full py-2.5 bg-accent text-canvas font-semibold text-sm rounded-lg hover:bg-accent/90 transition-colors"
           >
             <Download size={14} />
